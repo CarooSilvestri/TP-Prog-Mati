@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    
+ 
     <header>  
         <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="position:relative;">
         <div class="container-fluid">
@@ -23,9 +23,8 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            
-          <a href="index.php"><h1 class="duki">Duki</h1></a>
-            <ul class="navbar-nav">
+            <a href="index.php"><h1 class="duki">Duki</h1></a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link" href="#tit-prox-fechas" id="opciones-navbar">Fechas</a>
               </li>
@@ -39,56 +38,32 @@
           </div>
         </div>
       </nav>
+
     </header>
 
-    <div class="container-fluid" id="login">
-        <?php
-            // Conecto a la base de datos
-            $conect = mysqli_connect("localhost", "root", "");
-            $db = mysqli_select_db($conect, "base_de_datos");
+    <div class="container-fluid">
         
-            // Hago un pedido a la tabla 
-            $datos = mysqli_query($conect, "SELECT * FROM usuarios");
+      <?php 
+        // Conecto a la base de datos
+        $conect = mysqli_connect("localhost", "root", "");
+        $db = mysqli_select_db($conect, "base_de_datos");
+    
+        // obtengo el id
+        $id = $_GET['id'];
+
+        //consulto por la letra de la cancion
+        $consulta = 'SELECT * from canciones_duki where id='.$id;
+        $letra = mysqli_query($conect, $consulta);
+
+        $l = mysqli_fetch_row($letra);
         ?>
 
-        <div class="wrapper fadeInDown">
-            <div id="formContent">
-
-                <!-- Login Form -->
-                <form method="POST" action="">
-                    <input type="text" class="fadeIn first" name="user" placeholder="login">
-                    <input type="text" class="fadeIn second" name="pass" placeholder="password">
-                    <input type="submit" name="log" class="fadeIn third" value="Log In">
-                    <input type="submit" name="nuevo" class="fadeIn third" value="Nuevo">
-                </form>
-            </div>
-        </div>
-        <?php 
-        
-            $usuario = $_POST['user'];
-            $pass = $_POST['pass'];
-
-            if (!empty($usuario) && !empty($pass)) {
-
-                while($row = mysqli_fetch_assoc($datos)){
-                    $dbusername = $row["user"];
-                    $dbpassword = $row["pass"];
-                }
-
-                if ($usuario != $dbusername || $pass != $dbpassword){
-                    // Si el user no existe se crea
-                    echo "<script laguaje='javascript'>alert('Nuevo usuario creado');</script>";
-                    $insertar = 'INSERT INTO `usuarios`(`user`, `pass`) VALUES ("'.$usuario.'","'.$pass.'")';
-                    mysqli_query($conect, $insertar);
-                }else{
-                    header("Location: index.php");
-                }
-            }
-        
-        ?>
-
+        <div class="row" id="cancion">
+            <?= $l[4] ?>
+        </div>      
     </div>
 
+    
     <footer class="container-fluid">
         <div class="row justify-content-center" id="contenido">
             <h1>Suscribete para recibir información antes que nadie!</h1>

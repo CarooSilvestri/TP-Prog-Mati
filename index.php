@@ -23,8 +23,9 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <h1 class="duki">Duki</h1>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+          <a href="index.php"><h1 class="duki">Duki</h1></a>
+            <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="#tit-prox-fechas" id="opciones-navbar">Fechas</a>
               </li>
@@ -103,16 +104,9 @@
             </div>
         </section>
 
-        <section class="row d-sm-block d-md-block d-lg-none">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 banner">
-                <div class="row">
-                     <h1>VISITAR GALERIA</h1>
-                </div>               
-            </div>
-        </section>
    
-        <section class="d-sm-none d-md-none d-lg-block d-flex">
-            <div class="row row-fluid" id="img1"></div>
+        <section class="row">
+            <img src="rsc/1.jpg" class="img-fluid" id="img1" width="100%" alt="duki">
         </section>
         
         

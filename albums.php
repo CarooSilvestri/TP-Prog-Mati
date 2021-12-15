@@ -17,13 +17,13 @@
 <body>
  
     <header>  
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="position:relative;">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <h1 class="duki">Duki</h1>
+            <a href="index.php"><h1 class="duki">Duki</h1></a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link" href="#tit-prox-fechas" id="opciones-navbar">Fechas</a>
@@ -43,6 +43,52 @@
 
     <div class="container-fluid">
         
+      <?php 
+        // Conecto a la base de datos
+        $conect = mysqli_connect("localhost", "root", "");
+        $db = mysqli_select_db($conect, "base_de_datos");
+      
+        // Hago un pedido a la tabla 
+        $canciones = mysqli_query($conect, "SELECT * FROM canciones_duki");
+    
+        $act = "";
+
+        // Recorro las canciones
+        foreach($canciones as $cancion) {
+          
+          // Obtengo solo el nombre del album
+          if ($act != $cancion['album']) {
+            $act = $cancion['album'];
+        ?>
+            <div class="row album">
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <h2><?= $act ?></h2>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <?php 
+                //consulto por las canciones del album
+                $canciones_del_album = mysqli_query($conect, 'SELECT * FROM canciones_duki WHERE album="'.$act.'"');
+                foreach ($canciones_del_album as $cancion) {?>
+                <div class="d-flex">
+                  <a href="cancion.php?id=<?=$cancion['id'];?>">
+                    <p><?= $cancion['nombrecancion']; ?></p>
+                  </a>
+                  <form method="get" action="" style="margin-left: 8%">
+                    <input type="checkbox" id="cbox1" value="<?=$cancion['id'];?>">Añadir a favs</input>
+                </form>
+                </div>
+                <br>
+                  <?php
+                }?>
+              </div>
+          <?php }?>
+                
+          </div>
+          <?php
+      } ?>
+            
+      
     </div>
 
     
